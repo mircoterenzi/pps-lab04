@@ -126,28 +126,3 @@ object SchoolModel:
       def coursesOfATeacher(teacher: Teacher): Sequence[Course] = ???
       def hasTeacher(name: String): Boolean = ???
       def hasCourse(name: String): Boolean = ???
-@main def examples(): Unit =
-  import SchoolModel.BasicSchoolModule.*
-  val school = emptySchool
-  println(school.teachers) // Nil()
-  println(school.courses) // Nil()
-  println(school.hasTeacher("John")) // false
-  println(school.hasCourse("Math")) // false
-  val john = teacher("John")
-  val math = course("Math")
-  val italian = course("Italian")
-  val school2 = school.setTeacherToCourse(john, math)
-  println(school2.teachers) // Cons("John", Nil())
-  println(school2.courses) // Cons("Math", Nil())
-  println(school2.hasTeacher("John")) // true
-  println(school2.hasCourse("Math")) // true
-  println(school2.hasCourse("Italian")) // false
-  val school3 = school2.setTeacherToCourse(john, italian)
-  println(school3.teachers) // Cons("John", Nil())
-  println(school3.courses) // Cons("Math", Cons("Italian", Nil()))
-  println(school3.hasTeacher("John")) // true
-  println(school3.hasCourse("Math")) // true
-  println(school3.hasCourse("Italian")) // true
-  println(school3.coursesOfATeacher(john)) // Cons("Math", Cons("Italian", Nil()))
-
-
