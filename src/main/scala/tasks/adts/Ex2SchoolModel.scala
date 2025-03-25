@@ -1,6 +1,7 @@
 package tasks.adts
 import u03.extensionmethods.Optionals.*
 import u03.extensionmethods.Sequences.*
+import Sequence.*
 
 /*  Exercise 2: 
  *  Implement the below trait, and write a meaningful test.
@@ -112,18 +113,30 @@ object SchoolModel:
       def hasCourse(name: String): Boolean
 
   object BasicSchoolModule extends SchoolModule:
-    override type School = Nothing
-    override type Teacher = Nothing
-    override type Course = Nothing
+    case class SchoolImpl(teacherToCourse: Sequence[(Teacher, Course)])
 
-    def teacher(name: String): Teacher = ???
-    def course(name: String): Course = ???
-    def emptySchool: School = ???
+    override type School = SchoolImpl
+    override type Teacher = String
+    override type Course = String
+
+    def teacher(name: String): Teacher = name
+    def course(name: String): Course = name
+    def emptySchool: School = SchoolImpl(nil())
 
     extension (school: School)
-      def courses(): Sequence[String] = ???
-      def teachers(): Sequence[String] = ???
-      def setTeacherToCourse(teacher: Teacher, course: Course): School = ???
-      def coursesOfATeacher(teacher: Teacher): Sequence[Course] = ???
-      def hasTeacher(name: String): Boolean = ???
-      def hasCourse(name: String): Boolean = ???
+      def courses(): Sequence[String] = school match
+        case SchoolImpl(l) => l.map((t,c) => c).reverse()
+      def teachers(): Sequence[String] = school match
+        case SchoolImpl(l) => l.map((t,c) => t).distinct().reverse()
+      def setTeacherToCourse(teacher: Teacher, course: Course): School = school match
+        case SchoolImpl(l) =>
+          val school = SchoolImpl(cons((teacher, course), l))
+          println(school)
+          school
+      def coursesOfATeacher(teacher: Teacher): Sequence[Course] = school match
+        case SchoolImpl(l) => l.flatMap((t,c) => t match
+          case teacher => cons(c, nil())
+          case _ => nil()
+        ).reverse()
+      def hasTeacher(name: String): Boolean = teachers().contains(name)
+      def hasCourse(name: String): Boolean = courses().contains(name)
