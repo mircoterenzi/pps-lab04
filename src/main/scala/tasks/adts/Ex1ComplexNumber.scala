@@ -27,7 +27,7 @@ object Ex1ComplexNumbers:
       def re(): Double = complex.re
       def im(): Double = complex.im
       def sum(other: Complex): Complex = ComplexImpl(complex.re + other.re, complex.im + other.im)
-      def subtract(other: Complex): Complex = ComplexImpl(complex.re - other.re, complex.im - other.im)
+      def subtract(other: Complex): Complex = sum(ComplexImpl(-other.re, -other.im))
       def asString(): String = (complex.re, complex.im) match
         case (re, 0) => re.toString
         case (0, im) => im.toString + "i"
