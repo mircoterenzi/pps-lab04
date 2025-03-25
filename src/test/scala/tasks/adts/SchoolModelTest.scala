@@ -9,15 +9,16 @@ class SchoolModelTest:
   import tasks.adts.SchoolModel.BasicSchoolModule.*
   val school: School = emptySchool
   val john: Teacher = teacher("John")
+  val pablo: Teacher = teacher("Pablo")
   val math: Course = course("Math")
   val italian: Course = course("Italian")
   val school2: School = school.setTeacherToCourse(john, math)
-  val school3: School = school2.setTeacherToCourse(john, italian)
+  val school3: School = school2.setTeacherToCourse(john, italian).setTeacherToCourse(pablo, italian)
 
   @Test def testTeacher() =
     assertEquals(nil(), school.teachers())
     assertEquals(cons("John", nil()), school2.teachers())
-    assertEquals(cons("John", nil()), school3.teachers())
+    assertEquals(cons("John", cons("Pablo", nil())), school3.teachers())
   
   @Test def testCourses() =
     assertEquals(nil(), school.courses())

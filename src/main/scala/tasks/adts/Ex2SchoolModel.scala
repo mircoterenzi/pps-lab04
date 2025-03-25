@@ -125,15 +125,12 @@ object SchoolModel:
 
     extension (school: School)
       def courses(): Sequence[String] = school match
-        case SchoolImpl(l) => l.map((t,c) => c).reverse()
+        case SchoolImpl(l) => l.map((t,c) => c).distinct().reverse()
       def teachers(): Sequence[String] = school match
         case SchoolImpl(l) => l.map((t,c) => t).distinct().reverse()
       def setTeacherToCourse(teacher: Teacher, course: Course): School = school match
         case SchoolImpl(l) => SchoolImpl(cons((teacher, course), l))
       def coursesOfATeacher(teacher: Teacher): Sequence[Course] = school match
-        case SchoolImpl(l) => l.flatMap((t,c) => t match
-          case teacher => cons(c, nil())
-          case _ => nil()
-        ).reverse()
+        case SchoolImpl(l) => l.flatMap((t,c) => if t == teacher then cons(c, nil()) else nil()).reverse()
       def hasTeacher(name: String): Boolean = teachers().contains(name)
       def hasCourse(name: String): Boolean = courses().contains(name)
