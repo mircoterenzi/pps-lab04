@@ -24,12 +24,16 @@ object Ex1ComplexNumbers:
     type Complex = ComplexImpl
     def complex(re: Double, im: Double): Complex = ComplexImpl(re, im)
     extension (complex: Complex)
-      def re(): Double = complex.re
-      def im(): Double = complex.im
-      def sum(other: Complex): Complex = ComplexImpl(complex.re + other.re, complex.im + other.im)
-      def subtract(other: Complex): Complex = sum(ComplexImpl(-other.re, -other.im))
-      def asString(): String = (complex.re, complex.im) match
-        case (re, 0) => re.toString
-        case (0, im) => im.toString + "i"
-        case (re, im) if im >= 0 => f"$re + ${im}i"
-        case (re, im) => f"$re - ${-im}i"
+      def re(): Double = complex match
+        case ComplexImpl(re, _) => re
+      def im(): Double =  complex match
+        case ComplexImpl(_, im) => im
+      def sum(other: Complex): Complex = (complex, other) match
+        case (ComplexImpl(re1, im1), ComplexImpl(re2, im2)) => ComplexImpl(re1 + re2, im1 + im2)
+      def subtract(other: Complex): Complex = other match
+        case ComplexImpl(re, im) => sum(ComplexImpl(-re, -im))
+      def asString(): String = complex match
+        case ComplexImpl(re, 0) => re.toString
+        case ComplexImpl(0, im) => im.toString + "i"
+        case ComplexImpl(re, im) if im >= 0 => f"$re + ${im}i"
+        case ComplexImpl(re, im) => f"$re - ${-im}i"
