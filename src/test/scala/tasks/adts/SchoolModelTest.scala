@@ -37,5 +37,6 @@ class SchoolModelTest:
     assertTrue(school3.hasCourse("Italian"))
 
   @Test def testCoursesOfATeacher() =
+    assertEquals(nil(), school.coursesOfATeacher(john))
+    assertEquals(cons("Math", nil()), school2.coursesOfATeacher(john))
     assertEquals(cons("Math", cons("Italian", nil())), school3.coursesOfATeacher(john))
-    
