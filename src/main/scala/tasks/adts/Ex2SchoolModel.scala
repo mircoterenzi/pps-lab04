@@ -113,24 +113,29 @@ object SchoolModel:
       def hasCourse(name: String): Boolean
 
   object BasicSchoolModule extends SchoolModule:
-    case class SchoolImpl(teacherToCourse: Sequence[(Teacher, Course)])
+    case class TeacherToCourse(t: Teacher, c: Course)
 
-    override type School = SchoolImpl
+    override type School = Sequence[TeacherToCourse]
     override type Teacher = String
     override type Course = String
 
     def teacher(name: String): Teacher = name
     def course(name: String): Course = name
-    def emptySchool: School = SchoolImpl(nil())
+    def emptySchool: School = nil()
 
     extension (school: School)
-      def courses(): Sequence[String] = school match
-        case SchoolImpl(l) => l.map((t,c) => c).distinct()
-      def teachers(): Sequence[String] = school match
-        case SchoolImpl(l) => l.map((t,c) => t).distinct()
-      def setTeacherToCourse(teacher: Teacher, course: Course): School = school match
-        case SchoolImpl(l) => SchoolImpl(l.concat(cons((teacher, course), nil())))
-      def coursesOfATeacher(teacher: Teacher): Sequence[Course] = school match
-        case SchoolImpl(l) => l.flatMap((t,c) => if t == teacher then cons(c, nil()) else nil())
+      def courses(): Sequence[String] = school.map(_ match
+        case TeacherToCourse(t,c) => c
+      ).distinct()
+      def teachers(): Sequence[String] = school.map(_ match
+        case TeacherToCourse(t,c) => t
+      ).distinct()
+      def setTeacherToCourse(teacher: Teacher, course: Course): School =
+        school.concat(cons(TeacherToCourse(teacher, course), nil()))
+      def coursesOfATeacher(teacher: Teacher): Sequence[Course] =
+        school.flatMap(_ match
+          case TeacherToCourse(t,c) if t == teacher => cons(c, nil())
+          case _ => nil()
+        )
       def hasTeacher(name: String): Boolean = teachers().contains(name)
       def hasCourse(name: String): Boolean = courses().contains(name)
