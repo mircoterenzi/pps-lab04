@@ -31,5 +31,5 @@ object Ex1ComplexNumbers:
       def asString(): String = (complex.re, complex.im) match
         case (re, 0) => re.toString
         case (0, im) => im.toString + "i"
-        case (re, im) if im >= 0 => f"${re} + ${im}i"
-        case (re, im) => f"${re} - ${-im}i"
+        case (re, im) if im >= 0 => f"$re + ${im}i"
+        case (re, im) => f"$re - ${-im}i"
