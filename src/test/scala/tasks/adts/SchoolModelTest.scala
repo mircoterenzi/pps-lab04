@@ -7,12 +7,12 @@ import u03.extensionmethods.Sequences.Sequence.*
 class SchoolModelTest:
 
   import tasks.adts.SchoolModel.BasicSchoolModule.*
-  val school = emptySchool
-  val john = teacher("John")
-  val math = course("Math")
-  val italian = course("Italian")
-  val school2 = school.setTeacherToCourse(john, math)
-  val school3 = school2.setTeacherToCourse(john, italian)
+  val school: School = emptySchool
+  val john: Teacher = teacher("John")
+  val math: Course = course("Math")
+  val italian: Course = course("Italian")
+  val school2: School = school.setTeacherToCourse(john, math)
+  val school3: School = school2.setTeacherToCourse(john, italian)
 
   @Test def testTeacher() =
     assertEquals(nil(), school.teachers())
