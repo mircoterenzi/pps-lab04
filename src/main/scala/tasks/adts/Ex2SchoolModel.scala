@@ -129,10 +129,7 @@ object SchoolModel:
       def teachers(): Sequence[String] = school match
         case SchoolImpl(l) => l.map((t,c) => t).distinct().reverse()
       def setTeacherToCourse(teacher: Teacher, course: Course): School = school match
-        case SchoolImpl(l) =>
-          val school = SchoolImpl(cons((teacher, course), l))
-          println(school)
-          school
+        case SchoolImpl(l) => SchoolImpl(cons((teacher, course), l))
       def coursesOfATeacher(teacher: Teacher): Sequence[Course] = school match
         case SchoolImpl(l) => l.flatMap((t,c) => t match
           case teacher => cons(c, nil())
