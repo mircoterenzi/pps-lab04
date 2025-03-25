@@ -15,14 +15,14 @@ class SchoolModelTest:
   val school3 = school2.setTeacherToCourse(john, italian)
 
   @Test def testTeacher() =
-    assertEquals(Nil(), school.teachers)
-    assertEquals(Cons("John", Nil()), school2.teachers)
-    assertEquals(Cons("John", Nil()), school3.teachers)
+    assertEquals(Nil(), school.teachers())
+    assertEquals(Cons("John", Nil()), school2.teachers())
+    assertEquals(Cons("John", Nil()), school3.teachers())
   
   @Test def testCourses() =
-    assertEquals(Nil(), school.courses)
-    assertEquals(Cons("Math", Nil()), school2.courses)
-    assertEquals(Cons("Math", Cons("Italian", Nil())), school3.courses)
+    assertEquals(Nil(), school.courses())
+    assertEquals(Cons("Math", Nil()), school2.courses())
+    assertEquals(Cons("Math", Cons("Italian", Nil())), school3.courses())
 
   @Test def testHasTeacher() =
     assertFalse(school.hasTeacher("John"))

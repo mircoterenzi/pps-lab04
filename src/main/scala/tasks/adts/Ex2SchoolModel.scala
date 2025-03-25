@@ -55,7 +55,7 @@ object SchoolModel:
        * Note!! If there are duplicates, just return them once
        * @return the list of courses
        */
-      def courses: Sequence[String]
+      def courses(): Sequence[String]
       /**
        * This method should return the list of teachers
        * e.g.,
@@ -68,7 +68,7 @@ object SchoolModel:
        * Note!! If there are duplicates, just return them once
        * @return the list of teachers
        */
-      def teachers: Sequence[String]
+      def teachers(): Sequence[String]
       /**
        * This method should return a new school with the teacher assigned to the course
        * e.g.,
@@ -110,6 +110,7 @@ object SchoolModel:
        *
        */
       def hasCourse(name: String): Boolean
+
   object BasicSchoolModule extends SchoolModule:
     override type School = Nothing
     override type Teacher = Nothing
@@ -120,8 +121,8 @@ object SchoolModel:
     def emptySchool: School = ???
 
     extension (school: School)
-      def courses: Sequence[String] = ???
-      def teachers: Sequence[String] = ???
+      def courses(): Sequence[String] = ???
+      def teachers(): Sequence[String] = ???
       def setTeacherToCourse(teacher: Teacher, course: Course): School = ???
       def coursesOfATeacher(teacher: Teacher): Sequence[Course] = ???
       def hasTeacher(name: String): Boolean = ???
