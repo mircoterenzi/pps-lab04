@@ -48,13 +48,6 @@ object Sequences:
           case _ => Nil()
         _distinct(l, Nil())
 
-      def reverse(): Sequence[A] =
-        @tailrec
-        def _reverse(s: Sequence[A], acc: Sequence[A]): Sequence[A] = s match
-          case Cons(h, t) => _reverse(t, Cons(h, acc))
-          case _ => acc
-        _reverse(l, Nil())
-
     def of[A](n: Int, a: A): Sequence[A] =
       if (n == 0) then Nil[A]() else Cons(a, of(n - 1, a))
 
