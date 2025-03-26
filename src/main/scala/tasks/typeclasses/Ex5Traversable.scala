@@ -22,30 +22,36 @@ import scala.annotation.tailrec
 object Ex5Traversable:
 
   trait Traversable[T[_]]:
-    def accept[A](t: T[A]): Unit
+    def accept[A](t: T[A], log: A => Unit): Unit
 
-  def log[A](a: A): Unit = println("The next element is: "+a)
-
-  def logAll[T[_] : Traversable, A](elem: T[A]): Unit =
+  def logAll[T[_] : Traversable, A](elem: T[A])(log: A => Unit): Unit =
     val traversable = summon[Traversable[T]]
-    traversable.accept(elem)
+    traversable.accept(elem, log)
 
   given Traversable[Sequence] with
-    def accept[A](t: Sequence[A]): Unit = t match
-      case Cons(h, t) => log(h); logAll(t)
+    def accept[A](t: Sequence[A], log: A => Unit): Unit = t match
+      case Cons(h, t) => log(h); logAll(t)(log)
       case _ => ()
 
   given Traversable[Optional] with
-    def accept[A](t: Optional[A]) : Unit = t match
+    def accept[A](t: Optional[A], log: A => Unit) : Unit = t match
       case Just(a) => log(a)
       case _ => ()
 
   @main def tryTraversable(): Unit =
     val seq: Sequence[Int] = Cons(10, Cons(20, Cons(30, Nil())))
-    logAll(seq) // "The next element is: 10 The next element is: 20 The next element is: 30"
-
     val opt: Optional[Double] = Just(4.0)
-    logAll(opt) // "The next element is: 4.0"
+    val emtpySeq: Sequence[_] = Nil()
+    val emptyOpt: Optional[_] = Empty()
 
-    val empty: Optional[_] = Empty()
-    logAll(empty) // Nothing is printed
+    def log[A](a: A): Unit = println("The next element is: "+a)
+    logAll(seq)(log) // "The next element is: 10 The next element is: 20 The next element is: 30"
+    logAll(opt)(log) // "The next element is: 4.0"
+    logAll(emtpySeq)(log) // Nothing is printed
+    logAll(emptyOpt)(log)
+    
+    def print[A](a: A): Unit = println(a)
+    logAll(seq)(print) // "10 20 30"
+    logAll(opt)(print) // "4.0"
+    logAll(emtpySeq)(print)
+    logAll(emptyOpt)(print)
