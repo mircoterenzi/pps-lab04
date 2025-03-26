@@ -50,8 +50,8 @@ object Ex5Traversable:
     logAll(emptySeq, log) // Nothing is printed
     logAll(emptyOpt, log)
     
-    def print[A](a: A): Unit = println(a)
-    logAll(seq, print) // "10 20 30"
-    logAll(opt, print) // "4.0"
-    logAll(emptySeq, print)
-    logAll(emptyOpt, print)
+    def print() = println(_)
+    logAll(seq, print()) // "10 20 30"
+    logAll(opt, print()) // "4.0"
+    logAll(emptySeq, print())
+    logAll(emptyOpt, print())
