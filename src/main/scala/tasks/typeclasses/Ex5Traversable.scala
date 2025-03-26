@@ -1,4 +1,4 @@
-package u04lab
+package tasks.typeclasses
 import u03.Sequences.*
 import Sequence.*
 import u03.Optionals.*
