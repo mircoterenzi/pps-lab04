@@ -42,7 +42,10 @@ object Ex5Traversable:
 
   @main def tryTraversable(): Unit =
     val seq: Sequence[Int] = Cons(10, Cons(20, Cons(30, Nil())))
-    logAll(seq) // The next element is: 10 The next element is: 20 The next element is: 30
+    logAll(seq) // "The next element is: 10 The next element is: 20 The next element is: 30"
 
     val opt: Optional[Double] = Just(4.0)
-    logAll(opt) // The next element is: 4.0
+    logAll(opt) // "The next element is: 4.0"
+
+    val empty: Optional[_] = Empty()
+    logAll(empty) // Nothing is printed
