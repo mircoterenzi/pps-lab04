@@ -1,6 +1,8 @@
 package u04lab
 import u03.Sequences.*
 import Sequence.*
+import u03.Optionals.*
+import Optional.*
 
 import scala.annotation.tailrec
 
@@ -33,6 +35,14 @@ object Ex5Traversable:
       case Cons(h, t) => log(h); logAll(t)
       case _ => ()
 
+  given Traversable[Optional] with
+    def accept[A](t: Optional[A]) : Unit = t match
+      case Just(a) => log(a)
+      case _ => ()
+
   @main def tryTraversable(): Unit =
     val seq: Sequence[Int] = Cons(10, Cons(20, Cons(30, Nil())))
     logAll(seq) // The next element is: 10 The next element is: 20 The next element is: 30
+
+    val opt: Optional[Double] = Just(4.0)
+    logAll(opt) // The next element is: 4.0
