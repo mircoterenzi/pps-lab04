@@ -2,7 +2,7 @@ package tasks.adts
 
 import org.junit.*
 import org.junit.Assert.*
-import tasks.adts.Ex3Stacks.StackImpl
+import tasks.adts.Ex3Stack.{StackADT, StackImpl}
 import u03.Sequences.Sequence
 import u03.Optionals.Optional
 
@@ -10,12 +10,11 @@ import u03.Optionals.Optional
    specific implementation
 */
 
-class Stacktest:
+class StackTest:
 
-
-  val stack = StackImpl
-
+  val stack: StackADT = StackImpl
   import stack.*
+
   @Test def testEmptyStackHasNoElements() =
     assertEquals(Sequence.Nil(), empty[Int].asSequence())
   

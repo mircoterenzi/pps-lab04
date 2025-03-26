@@ -1,7 +1,6 @@
 package tasks.monads
 
 import u04.monads.Monads.Monad
-import u04.monads.Monads.Monad
 
 /**
   * Exercise 6: 
@@ -39,9 +38,7 @@ object Ex6TryModel:
         case Success(value) => f(value)
         case Failure(exception) => Failure(exception)
 
-      override def flatMap[B](f: A => Try[B]): Try[B] = ??? 
-      
-@main def main: Unit = 
+@main def main(): Unit =
   import Ex6TryModel.*
 
   val result = for 

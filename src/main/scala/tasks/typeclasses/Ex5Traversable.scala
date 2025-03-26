@@ -1,10 +1,8 @@
 package tasks.typeclasses
-import u03.Sequences.*
-import Sequence.*
 import u03.Optionals.*
-import Optional.*
-
-import scala.annotation.tailrec
+import u03.Optionals.Optional.*
+import u03.Sequences.*
+import u03.Sequences.Sequence.*
 
 /*  Exercise 5: 
  *  - Generalise by ad-hoc polymorphism logAll, such that:
