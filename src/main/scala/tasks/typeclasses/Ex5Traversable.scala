@@ -1,6 +1,8 @@
 package u04lab
-import u03.Sequences.* 
+import u03.Sequences.*
 import Sequence.*
+
+import scala.annotation.tailrec
 
 /*  Exercise 5: 
  *  - Generalise by ad-hoc polymorphism logAll, such that:
@@ -17,10 +19,20 @@ import Sequence.*
 
 object Ex5Traversable:
 
+  trait Traversable[T[_]]:
+    def accept[A](t: T[A]): Unit
+
   def log[A](a: A): Unit = println("The next element is: "+a)
 
-  def logAll[A](seq: Sequence[A]): Unit = seq match
-    case Cons(h, t) => log(h); logAll(t)
-    case _ => ()
+  def logAll[T[_] : Traversable, A](elem: T[A]): Unit =
+    val traversable = summon[Traversable[T]]
+    traversable.accept(elem)
 
-  
+  given Traversable[Sequence] with
+    def accept[A](t: Sequence[A]): Unit = t match
+      case Cons(h, t) => log(h); logAll(t)
+      case _ => ()
+
+  @main def tryTraversable(): Unit =
+    val seq: Sequence[Int] = Cons(10, Cons(20, Cons(30, Nil())))
+    logAll(seq) // The next element is: 10 The next element is: 20 The next element is: 30
