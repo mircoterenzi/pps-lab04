@@ -22,11 +22,9 @@ object Ex4Summables:
 
   def sumAll[A: Summable](seq: Sequence[A]): A =
     val summable = summon[Summable[A]]
-    @tailrec
-    def _sumAll(seq: Sequence[A], acc: A): A = seq match
-      case Cons(h, t) => _sumAll(t, summable.sum(h, acc))
-      case _ => acc
-    _sumAll(seq, summable.zero)
+    seq match
+        case Cons(h, t) => summable.sum(h, sumAll(t))
+        case _ => summable.zero
 
   given Summable[Int] with
     def sum(a1: Int, a2: Int): Int = a1 + a2
@@ -39,5 +37,5 @@ object Ex4Summables:
     def zero: Double = 0.0
 
   given Summable[String] with
-    def sum(a1: String, a2: String): String = a2 + a1
+    def sum(a1: String, a2: String): String = a1 + a2
     def zero: String = ""
