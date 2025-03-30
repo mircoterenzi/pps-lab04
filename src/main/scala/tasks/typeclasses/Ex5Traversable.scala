@@ -23,8 +23,7 @@ object Ex5Traversable:
     def accept[A](t: T[A], log: A => Unit): Unit
 
   def logAll[T[_]: Traversable, A](elem: T[A], log: A => Unit): Unit =
-    val traversable = summon[Traversable[T]]
-    traversable.accept(elem, log)
+    summon[Traversable[T]].accept(elem, log)
 
   given Traversable[Sequence] with
     def accept[A](t: Sequence[A], log: A => Unit): Unit = t match
